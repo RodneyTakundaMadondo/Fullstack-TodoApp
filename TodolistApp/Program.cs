@@ -62,6 +62,8 @@ using (var scope = app.Services.CreateScope())
     var db = scope.ServiceProvider.GetRequiredService<TaskDbContext>();
     db.Database.Migrate();
 }
+app.MapGet("/debug-conn", (IConfiguration config) =>
+    config.GetConnectionString("DefaultConnection") ?? "NO CONNECTION STRING");
 
 
 app.Run();
