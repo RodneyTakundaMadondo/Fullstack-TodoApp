@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: TodolistApp
+    runtime: dotnet
+    buildCommand: dotnet build
+    startCommand: dotnet TodolistApp.dll
+    envVars:
+      - key: ConnectionStrings__DefaultConnection
+        sync: false
