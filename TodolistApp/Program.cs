@@ -48,6 +48,9 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+var port = Environment.GetEnvironmentVariable("PORT") ?? "80";
+app.Urls.Clear();
+app.Urls.Add($"http://*:{port}");
 
 
 app.MapControllerRoute(
