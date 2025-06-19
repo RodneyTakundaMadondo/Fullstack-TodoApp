@@ -1,0 +1,94 @@
+﻿@model ToDoListViewModel
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>To Do App</title>
+	<link rel="stylesheet" href="@Url.Content("~/css/site.css")" />
+
+</head>
+
+<body>
+
+	<main>
+		<section class="header-img-container">
+			<picture>
+				<source class="header-image-source" media="(min-width:768px)" srcset="~/images/bg-desktop-light.jpg">
+				<img class="header-image " src="~/images/bg-mobile-light.jpg" />
+			</picture>
+
+			<div class="main-container">
+
+				<div class="header-logo-icon flex justify-between items-center">
+
+					<h1 class="uppercase font-bold text-white heading-text ">
+						todo
+					</h1>
+
+					<button class="theme-mode">
+						<img class="theme-img" src="~/images/icon-moon.svg" alt="Moon" asp-append-version="true" />
+					</button>
+				</div>
+
+				<div class="input-container relative">
+					<label class="absolute custom-checkbox task-in-checkb" for="addTask">
+						<input class="addTask checkbox-input " type="checkbox" name="addTask" id="addTask">
+						<span class="checkbox-box"></span>
+					</label>
+					<input type="text" name="task" placeholder="Create a new todo..." class="addTaskInput w-full " />
+				</div>
+
+				<div class="task-container relative">
+					<ul id="items">
+						@foreach (var task in Model.ToDoTasks)
+						{
+							var checkboxId = $"markComplete_{task.ToDoTaskId}";
+							<li class="flex justify-between items-center task-listitem">
+								<div class="flex  items-center check_task " data-active="@(task.IsActive ? "active":"unactive")">
+									<label class="custom-checkbox" for="@checkboxId">
+										<input class="markComplete checkbox-input " type="checkbox" @(task.IsActive ? "" : "checked") name="CheckComplete" id="@checkboxId" data-id="@task.ToDoTaskId">
+									<span class="checkbox-box"></span>
+								     </label>
+								     <p class="task-text">@task.TaskDescription</p>
+								</div>
+
+								<button data-delete="@task.ToDoTaskId" class="delete-btn"><img src="~/images/icon-cross.svg" alt="Delete" /></button>
+							</li>
+						}
+
+					</ul>
+
+					<div class="flex justify-between  btn-container ">
+						<p><span class="total-active-notes">@(Model.ToDoTasks.Where(note => note.IsActive).Count())</span> items left</p>
+						<div class="flex absolute filter-btn-container ">
+							<button class="filter-btns active" data-filter="all">All</button>
+							<button class="filter-btns" data-filter="active">Active</button>
+							<button class="filter-btns" data-filter="completed">Completed</button>
+						</div>
+						<button class="clear-completed">Clear Completed </button>
+					</div>
+				</div>
+
+
+
+			</div>
+
+		</section>
+
+	</main>
+	<footer >
+		
+			<p>
+				Drag and drop to reorder list
+			</p>
+		
+	</footer>
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/js/Sortable.min.js"></script>
+	<script src="~/js/site.js"></script>
+</body>
+
+</html>

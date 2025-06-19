@@ -1,0 +1,22 @@
+## Ignore Visual Studio stuff
+.vs/
+*.user
+*.suo
+
+## Build output
+bin/
+obj/
+*.exe
+*.dll
+
+## ASP.NET secrets
+secrets.json
+
+## Runtime logs
+*.log
+
+## Publish artifacts
+*.publish/
+
+## Node (if using frontend stuff)
+node_modules/
