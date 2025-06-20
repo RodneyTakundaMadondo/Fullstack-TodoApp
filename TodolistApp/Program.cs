@@ -13,11 +13,21 @@ builder.Services.AddControllersWithViews()
 builder.Services.AddScoped<ITaskRepository, TaskRepository>();
 builder.Services.AddScoped<IUserPreferenceRepository,UserPreferenceRepository>();
 
+//builder.Services.AddDbContext<TaskDbContext>(options =>
+//{
+//    options.UseNpgsql(
+//        builder.Configuration["ConnectionStrings:ToDoAppDbContextConnection"]);
+//});
 builder.Services.AddDbContext<TaskDbContext>(options =>
 {
-    options.UseNpgsql(
-        builder.Configuration["ConnectionStrings:ToDoAppDbContextConnection"]);
+    var conn = builder.Configuration.GetConnectionString("DefaultConnection");
+
+    if (string.IsNullOrEmpty(conn))
+        throw new InvalidOperationException("Connection string is missing!");
+
+    options.UseNpgsql(conn);
 });
+
 
 var app = builder.Build();
 
